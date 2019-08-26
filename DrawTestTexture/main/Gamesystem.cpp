@@ -198,7 +198,7 @@ void DrowBeam(Count* count, VariableNumber* var,int MapChipList[20][28], BeamSid
 				
 				var->BeamState = 0;
 			}
-			count->Frame2 = 0;
+			count->Frame9 = 0;
 
 			if (var->temp == 1)
 			{
@@ -216,21 +216,32 @@ void DrowBeam(Count* count, VariableNumber* var,int MapChipList[20][28], BeamSid
 
 	if ((beamVerticality->BeamVerticalityeFlag == true) || (beamSide->BeamSideFlag == true))
 	{
-		if (count->Frame2 % 12 == 0 || count->Frame2 < 60)
+		if (count->Frame9 % 12 == 0 || count->Frame9 < 60)
 		{
-			beamVerticality->m_PosTu     = beamVerticality->m_PosTu       + beamVerticality->m_Add_Tu_Size;
+			beamVerticality->m_PosTu     =  beamVerticality->m_PosTu_Size;
 			beamVerticality->m_PosTu_Size = beamVerticality->m_PosTu_Size + beamVerticality->m_Add_Tu_Size;
 
-			beamSide->m_PosTv      = beamSide->m_PosTv     + beamSide->m_Add_Tv_Size;
+			beamSide->m_PosTv      = beamSide->m_PosTv_Size;
 			beamSide->m_PosTv_Size = beamSide->m_PosTv_Size + beamSide->m_Add_Tv_Size;
 
 		}
 
-		if (count->Frame2 % 12 == 0 || (count->Frame2 > 60 && count->Frame2 < 120))
+		if (count->Frame9 % 12 == 0 || (count->Frame2 > 60 && count->Frame9 < 120))
 		{
-			beamSide->m_PosTv      = beamSide->m_PosTv      - beamSide->m_Add_Tv_Size;
+			beamVerticality->m_PosTu      = beamVerticality->m_PosTu_Size;
+			beamVerticality->m_PosTu_Size = beamVerticality->m_PosTu_Size - beamVerticality->m_Add_Tu_Size;
+
+
+			beamSide->m_PosTv      = beamSide->m_PosTv_Size;
 			beamSide->m_PosTv_Size = beamSide->m_PosTv_Size - beamSide->m_Add_Tv_Size;
 		}
+	}
+
+	if (count->Frame9 > 120)
+	{
+		count->Frame9 = 0;
+		beamSide->BeamSideFlag = false;
+		beamVerticality->BeamVerticalityeFlag = false;
 	}
 
 }
