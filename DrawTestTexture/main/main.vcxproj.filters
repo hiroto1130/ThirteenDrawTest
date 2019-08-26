@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Draw">
+      <UniqueIdentifier>{1edba6fc-ad70-442e-a1b6-a37f72af44e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine">
+      <UniqueIdentifier>{d744d6bc-a610-4f8a-b298-64fb51963eed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{48a53bc9-5282-47be-a7a6-6394a63287c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{fac4136f-48a0-4411-8e6b-7f649a967ab2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Engine.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="window.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SetScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultScene..cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Option.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Device.cpp">
+      <Filter>engine</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawTexture.cpp">
+      <Filter>Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="Gamesystem.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DrawTexture.h">
+      <Filter>Draw</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SetScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Option.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Device.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="class.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="window.h">
+      <Filter>engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Gamesystem.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
