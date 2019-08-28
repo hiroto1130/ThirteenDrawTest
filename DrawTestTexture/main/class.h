@@ -81,6 +81,7 @@ public:
 	float MeteoriteState;
 	float MeteoriteDrawState;
 	float MeteoriteDrawState2;
+	float BemaDrawState;
 	float EnemyState;
 	float EnemyDrawState;
 

@@ -89,8 +89,11 @@ public:
 	float m_DrawSizeHight = 120;
 	float m_PosTu      = 0 / 2048;
 	float m_PosTu_Size = 1120 / 2048; 
+
 	float m_PosTv      = (float)    0 / 1024;
 	float m_PosTv_Size = (float)  120 / 1024;
+	void InputSidePosTv(float Tv, float TvSize);
+
 	float m_Add_Tv_Size = (float) 120 / 1024;
 };
 
@@ -102,8 +105,12 @@ public:
 	float m_PosY;
 	float m_DrawSizeWidth = 120;
 	float m_DrawSizeHight = 960;
+
 	float m_PosTu      = (float)    0 / 1024;
 	float m_PosTu_Size = (float)  120 / 1024;
+
+	void InputVerticalityPosTv(float Tv, float TvSize);
+	
 	float m_Add_Tu_Size = (float)120 / 1024;
 	float m_PosTv      = 0;
 	float m_PosTv_Size = 1;

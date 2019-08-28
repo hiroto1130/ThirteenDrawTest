@@ -123,6 +123,19 @@ void HitJudge(MainChar* mainChar)
 				}
 }
 
+// ビーム描画位置入力関数
+void BeamSide::InputSidePosTv(float Tv, float TvSize)
+{
+	m_PosTv = Tv / 1024;
+	m_PosTv_Size = TvSize / 1024;
+}
+
+void BeamVerticality::InputVerticalityPosTv(float Tv, float TvSize)
+{
+	m_PosTu = Tv / 1024;
+	m_PosTu_Size = TvSize / 1024;
+}
+
 // ビーム(予兆)の描画設定
 void DrowBeam(Count* count, VariableNumber* var,int MapChipList[20][28], BeamSide* beamSide,BeamVerticality*  beamVerticality)
 {
@@ -155,9 +168,9 @@ void DrowBeam(Count* count, VariableNumber* var,int MapChipList[20][28], BeamSid
 				}
 
 			}
-beamVerticality->m_PosX = with * 40 + 80;
+            beamVerticality->m_PosX = with * 40 + 80;
 			
-			count->Frame3 = 0;
+			count->Frame3 = 0; 
 
 			break;
 		case 2: // hight
@@ -180,6 +193,7 @@ beamVerticality->m_PosX = with * 40 + 80;
 
 	}
 
+
 	if (var->BeamState == 1)
 	{
 		if (count->Frame2 == (60 * 2))
@@ -194,55 +208,71 @@ beamVerticality->m_PosX = with * 40 + 80;
 						MapChipList[a][b] = 1;
 					}
 				}
-				
-				var->BeamState = 0;
 			}
-
-			count->Frame10 = 0;
-
-			if (var->temp == 1)
-			{
-				beamVerticality->BeamVerticalityeFlag = true;
-			}else
-				if (var->temp == 2)
-				{
-					beamSide->BeamSideFlag = true;
-					
-				}
-
 		}
-		
-		
+	}
+
+	
+	if (count->Frame2 == 120)
+	{
+		if (var->temp == 1)
+		{
+			beamVerticality->BeamVerticalityeFlag = true;
+		}
+		else
+			if (var->temp == 2)
+			{
+				beamSide->BeamSideFlag = true;
+
+			}
 	}
 
 	if ((beamVerticality->BeamVerticalityeFlag == true) || (beamSide->BeamSideFlag == true))
 	{
-		if (count->Frame10 % 24 == 0)
+		if (count->Frame2 % 15 == 0)
 		{
-			if (count->Frame10 < 72)
+			if (count->Frame2 == 135)// 二個目
 			{
-				beamVerticality->m_PosTu = beamVerticality->m_PosTu_Size;
-				beamVerticality->m_PosTu_Size = beamVerticality->m_PosTu_Size + beamVerticality->m_Add_Tu_Size;
-
-				beamSide->m_PosTv = beamSide->m_PosTv_Size;
-				beamSide->m_PosTv_Size = beamSide->m_PosTv_Size + beamSide->m_Add_Tv_Size;
+				beamSide->InputSidePosTv(120,240);
+				beamVerticality->InputVerticalityPosTv(120, 240);
 
 			}else
-				if (count->Frame10 > 72 && count->Frame10 < 120)
+				if (count->Frame2 == 150)// 三個目
 				{
-					beamVerticality->m_PosTu = beamVerticality->m_PosTu_Size;
-					beamVerticality->m_PosTu_Size = beamVerticality->m_PosTu_Size - beamVerticality->m_Add_Tu_Size;
-
-
-					beamSide->m_PosTv = beamSide->m_PosTv_Size;
-					beamSide->m_PosTv_Size = beamSide->m_PosTv_Size - beamSide->m_Add_Tv_Size;
-				}
+					beamSide->InputSidePosTv(240, 360);
+					beamVerticality->InputVerticalityPosTv(240, 360);
+				}else
+					if (count->Frame2 == 165) // 四個目
+					{
+						beamSide->InputSidePosTv(360, 480);
+						beamVerticality->InputVerticalityPosTv(360, 480);
+					}else
+						if (count->Frame2 == 180)// 五個目
+						{
+							beamSide->InputSidePosTv(240, 360);
+							beamVerticality->InputVerticalityPosTv(240, 360);
+						}else
+							if (count->Frame2 == 195)// 六個目
+							{
+								beamSide->InputSidePosTv(120, 240);
+								beamVerticality->InputVerticalityPosTv(120, 240);
+							}else
+								if (count->Frame2 == 210)// 七個目
+								{
+									beamSide->InputSidePosTv(0, 120);
+									beamVerticality->InputVerticalityPosTv(0, 120);
+								}else
+									if (count->Frame2 == 225)// 八個目
+									{
+										beamSide->InputSidePosTv(480,600);
+										beamVerticality->InputVerticalityPosTv(480, 600);
+									}
 		}
 	}
 
-	if (count->Frame10 == 120)
+	if (count->Frame2 == 240)
 	{
-		count->Frame10 = 0;
+		var->BeamState = 0;
 		beamSide->BeamSideFlag = false;
 		beamVerticality->BeamVerticalityeFlag = false;
 	}
