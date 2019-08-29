@@ -112,23 +112,17 @@ public:
 	void Frame7Reset() { Frame7 = 0; }
 
 	int Frame8 = 0;
-	void Frame8Reset() { Frame7 = 0; }
+	void Frame8Reset() { Frame8 = 0; }
 
 	int Frame9 = 0;
-	void Frame9Reset() { Frame7 = 0; }
+	void Frame9Reset() { Frame9 = 0; }
 
 	int Frame10 = 0;
 	void Frame10Reset() { Frame10 = 0; }
-	void AllReset()
-	{
-		Frame = 0;
-		Frame2 = 0;
-		Frame3 = 0;
-		Frame4 = 0;
-		Frame5 = 0;
-		Frame6 = 0;
-		Frame7 = 0;
-	}
+
+	int BeamCount = 0;
+
+	void AllReset();
 };
 
 // extern VariableNumber var;
@@ -208,21 +202,9 @@ public:
 	float y;
 	float chip_x;
 	float chip_y;
-	/*void draw_point(int a, int b);
-	void draw_chip(int a, int b);*/
 };
 
-//void MapChipData::draw_point(int a, int b)
-//{
-//	x = a;
-//	y = b;
-//};
-//
-//void MapChipData::draw_chip(int a, int b)
-//{
-//	chip_x = a;
-//	chip_y = b;
-//};
+
 
 
 extern MapChipData MapData;

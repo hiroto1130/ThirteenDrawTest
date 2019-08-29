@@ -141,9 +141,9 @@ void InitGameScene(Pointa* point)
 {
 	LoadTexture("Texture/main_back.png", &GameTextureData.m_pTexture[GameTextureList::BackTexture], 0, point);
 	LoadTexture("Texture/map_chip2.png", &GameTextureData.m_pTexture[GameTextureList::MapChipTexture], 0, point);
-	LoadTexture("Texture/chara2.png", &GameTextureData.m_pTexture[GameTextureList::ChraTexture], 0, point);
-	LoadTexture("Texture/beam_S.png", &GameTextureData.m_pTexture[GameTextureList::BeamSideTextutre], 0, point);
-	LoadTexture("Texture/beam_V.png", &GameTextureData.m_pTexture[GameTextureList::BeamVerticalityTexture], 0, point);
+	LoadTexture("Texture/character.png", &GameTextureData.m_pTexture[GameTextureList::ChraTexture], 0, point);
+	LoadTexture("Texture/beam_Side.png", &GameTextureData.m_pTexture[GameTextureList::BeamSideTextutre], 0, point);
+	LoadTexture("Texture/beam_Ver.png", &GameTextureData.m_pTexture[GameTextureList::BeamVerticalityTexture], 0, point);
 
 	ChangeSceneStep(SceneStep::MainStep);
 }

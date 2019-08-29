@@ -66,6 +66,12 @@ void InptKeystate(Count* count, KeyState *keyState, Bullet bullet[5])
 	}
 }
 
+void MainChar::InputTv(int Tu, int Tu_Size)
+{
+	m_PosTu = (float) Tu / 1024;
+	m_PosTu_Size =(float) Tu_Size / 1024;
+}
+
 // 10フレーム経たないと動かない
 void ChraMove(Count* count, KeyState *keyState,MainChar * mainChar)
 {
@@ -89,6 +95,36 @@ void ChraMove(Count* count, KeyState *keyState,MainChar * mainChar)
 			break;
 		}
 	}
+
+	if (count->Frame10 == 10)
+	{
+		mainChar->InputTv(80, 120);
+	}else
+		if (count->Frame10 == 20)
+		{
+			mainChar->InputTv(120, 160);
+		}else
+			if (count->Frame10 == 30)
+			{
+				mainChar->InputTv(160, 200);
+			}else
+				if (count->Frame10 == 40)
+				{
+					mainChar->InputTv(120, 160);
+				}else
+					if (count->Frame10 == 50)
+					{
+						mainChar->InputTv(80, 120);
+					}else
+						if (count->Frame10 == 60)
+						{
+							mainChar->InputTv(40, 80);
+						}
+
+					if (count->Frame10 > 60)
+					{
+						count->Frame10 = 0;
+					}
 }
 
 // 10フレームたったら再度キー入力できるようになる
@@ -139,6 +175,9 @@ void BeamVerticality::InputVerticalityPosTv(float Tv, float TvSize)
 // ビーム(予兆)の描画設定
 void DrowBeam(Count* count, VariableNumber* var,int MapChipList[20][28], BeamSide* beamSide,BeamVerticality*  beamVerticality)
 {
+	for (int a = 0; a < count->BeamCount; a++)
+	{
+	}
 
 	if (count->Frame3 == (60 * 8))
 	{
@@ -229,44 +268,54 @@ void DrowBeam(Count* count, VariableNumber* var,int MapChipList[20][28], BeamSid
 
 	if ((beamVerticality->BeamVerticalityeFlag == true) || (beamSide->BeamSideFlag == true))
 	{
-		if (count->Frame2 % 15 == 0)
+		if (count->Frame2 % 12 == 0)
 		{
-			if (count->Frame2 == 135)// 二個目
+			if (count->Frame2 == 126)// 二個目
 			{
-				beamSide->InputSidePosTv(120,240);
-				beamVerticality->InputVerticalityPosTv(120, 240);
+				beamSide->InputSidePosTv(240,360);
+				beamVerticality->InputVerticalityPosTv(240, 360);
 
 			}else
-				if (count->Frame2 == 150)// 三個目
+				if (count->Frame2 == 132)// 三個目
 				{
-					beamSide->InputSidePosTv(240, 360);
-					beamVerticality->InputVerticalityPosTv(240, 360);
+					beamSide->InputSidePosTv(360, 480);
+					beamVerticality->InputVerticalityPosTv(360, 480);
 				}else
-					if (count->Frame2 == 165) // 四個目
+					if (count->Frame2 == 138) // 四個目
 					{
-						beamSide->InputSidePosTv(360, 480);
-						beamVerticality->InputVerticalityPosTv(360, 480);
+						beamSide->InputSidePosTv(480, 600);
+						beamVerticality->InputVerticalityPosTv(480, 600);
 					}else
-						if (count->Frame2 == 180)// 五個目
+						if (count->Frame2 == 144)// 五個目
 						{
-							beamSide->InputSidePosTv(240, 360);
-							beamVerticality->InputVerticalityPosTv(240, 360);
+							beamSide->InputSidePosTv(600, 720);
+							beamVerticality->InputVerticalityPosTv(600, 720);
 						}else
-							if (count->Frame2 == 195)// 六個目
+							if (count->Frame2 == 216)// 六個目
 							{
-								beamSide->InputSidePosTv(120, 240);
-								beamVerticality->InputVerticalityPosTv(120, 240);
+								beamSide->InputSidePosTv(480, 600);
+								beamVerticality->InputVerticalityPosTv(480, 600);
 							}else
-								if (count->Frame2 == 210)// 七個目
+								if (count->Frame2 == 222)// 七個目
 								{
-									beamSide->InputSidePosTv(0, 120);
-									beamVerticality->InputVerticalityPosTv(0, 120);
+									beamSide->InputSidePosTv(360, 480);
+									beamVerticality->InputVerticalityPosTv(360, 480);
 								}else
-									if (count->Frame2 == 225)// 八個目
+									if (count->Frame2 == 228)// 八個目
 									{
-										beamSide->InputSidePosTv(480,600);
-										beamVerticality->InputVerticalityPosTv(480, 600);
-									}
+										beamSide->InputSidePosTv(240,360);
+										beamVerticality->InputVerticalityPosTv(240, 360);
+									}else
+										if (count->Frame2 == 234)// 九個目
+										{
+											beamSide->InputSidePosTv(120, 240);
+											beamVerticality->InputVerticalityPosTv(120, 240);
+										}else
+											if (count->Frame2 == 228)// 十個目
+											{
+												beamSide->InputSidePosTv(  0, 120);
+												beamVerticality->InputVerticalityPosTv(  0, 120);
+											}
 		}
 	}
 
@@ -601,6 +650,7 @@ void ShotMove(KeyState* keyState, Bullet bullet[5] , MainChar* mainChar)
 			break;
 		}
 	}
+
 }
 
 void ShotHitJudge(Bullet bullet[5], KeyState* keyState,MainChar* mainChar )

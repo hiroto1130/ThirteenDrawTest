@@ -16,6 +16,20 @@ void FlameCountState(Count* count, ResultTextureSize* rts);
 TEXTUREDATA ResultTextureData;
  ResultTextureSize rts;
 
+ void Count::AllReset()
+ {
+	 Frame = 0;
+	 Frame2 = 0;
+	 Frame3 = 0;
+	 Frame4 = 0;
+	 Frame5 = 0;
+	 Frame6 = 0;
+	 Frame7 = 0;
+	 Frame8 = 0;
+	 Frame9 = 0;
+	 Frame10 = 0;
+ }
+
 SceneId ResultSceneMain(Pointa* point, Count* count)
 {
 	switch (GetCurrentSceneStep())
