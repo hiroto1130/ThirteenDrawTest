@@ -14,7 +14,7 @@ void FrameCount(Count* count, KeyState* keyState);
 
 void HitJudge(MainChar* mainChar);
 
-void DrowBeam(Count* count, VariableNumber* var, int MapChipList[20][28], BeamSide* beamSide, BeamVerticality* beamVerticality);
+void SetBeam(Count* count, VariableNumber* var, int MapChipList[20][28], BeamSide* beamSide, BeamVerticality* beamVerticality,int beamNumbre);
 
 void DrawMeteorite(Count* count, VariableNumber* var, int MapChipList[20][28], Meteorite meteorite[]);
 

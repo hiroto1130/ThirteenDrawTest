@@ -160,7 +160,7 @@ void UpdateGameScene(Count* count, VariableNumber* var)
 
 	HitJudge(&mainChar);
 
-	DrowBeam(count, var, MapChipList, &beamSide, &beamVerticality);
+	SetBeam(count, var, MapChipList, &beamSide, &beamVerticality,1);
 
 	DrawMeteorite(count, var, MapChipList, meteorite);
 

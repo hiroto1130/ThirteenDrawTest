@@ -172,8 +172,11 @@ void BeamVerticality::InputVerticalityPosTv(float Tv, float TvSize)
 	m_PosTu_Size = TvSize / 1024;
 }
 
+
+
+
 // ビーム(予兆)の描画設定
-void DrowBeam(Count* count, VariableNumber* var,int MapChipList[20][28], BeamSide* beamSide,BeamVerticality*  beamVerticality)
+void SetBeam(Count* count, VariableNumber* var,int MapChipList[20][28], BeamSide* beamSide,BeamVerticality*  beamVerticality,int BeamNnmber)
 {
 	for (int a = 0; a < count->BeamCount; a++)
 	{
@@ -328,6 +331,11 @@ void DrowBeam(Count* count, VariableNumber* var,int MapChipList[20][28], BeamSid
 
 }
 
+void DrawBeam()
+{
+
+
+}
 void DrawMeteorite(Count* count, VariableNumber* var,int MapChipList[20][28], Meteorite meteorite[])
 {
 	// if(GetKeyStatus(DIK_M))
