@@ -45,24 +45,50 @@ void InptKeystate(Count* count, KeyState *keyState, Bullet bullet[5])
 		{
 			keyState->Shot = 1;
 			bullet[0].ShotFlag = true;
+
+			if (bullet->BulletCount < 4)
+			{
+				bullet->BulletCount = bullet->BulletCount + 1;
+			}
+
 		}
 		else
 			if (GetKeyStatus(DIK_UP))
 			{
 				keyState->Shot = 2;
 				bullet[0].ShotFlag = true;
+
+				if (bullet->BulletCount < 4)
+				{
+					bullet->BulletCount = bullet->BulletCount + 1;
+				}
 			}
 		if (GetKeyStatus(DIK_LEFT))
 		{
 			keyState->Shot = 3;
 			bullet[0].ShotFlag = true;
+
+			if (bullet->BulletCount < 4)
+			{
+				bullet->BulletCount = bullet->BulletCount + 1;
+			}
 		}
 		else
 			if (GetKeyStatus(DIK_RIGHT))
 			{
 				keyState->Shot = 4;
 				bullet[0].ShotFlag = true;
+
+				if (bullet->BulletCount < 4)
+				{
+					bullet->BulletCount = bullet->BulletCount + 1;
+				}
 			}
+	}
+
+	if (GetKeyStatus(DIK_R))
+	{
+		bullet->BulletCount = 0;
 	}
 }
 
@@ -95,37 +121,49 @@ void ChraMove(Count* count, KeyState *keyState,MainChar * mainChar)
 			break;
 		}
 	}
+}
+
+void CharTextureChange(Count* count, MainChar* mainChar,Bullet * bullet)
+{
+	mainChar->Add_TvSize = 160 * bullet->BulletCount;
 
 	if (count->Frame10 == 10)
 	{
-		mainChar->InputTv(80, 120);
-	}else
+		mainChar->InputTv(80 + mainChar->Add_TvSize, 120 + mainChar->Add_TvSize);
+	}
+	else
 		if (count->Frame10 == 20)
 		{
-			mainChar->InputTv(120, 160);
-		}else
+			mainChar->InputTv(120 + mainChar->Add_TvSize, 160 + mainChar->Add_TvSize);
+		}
+		else
 			if (count->Frame10 == 30)
 			{
-				mainChar->InputTv(160, 200);
-			}else
+				mainChar->InputTv(160 + mainChar->Add_TvSize, 200 + mainChar->Add_TvSize);
+			}
+			else
 				if (count->Frame10 == 40)
 				{
-					mainChar->InputTv(120, 160);
-				}else
+					mainChar->InputTv(120 + mainChar->Add_TvSize, 160 + mainChar->Add_TvSize);
+				}
+				else
 					if (count->Frame10 == 50)
 					{
-						mainChar->InputTv(80, 120);
-					}else
+						mainChar->InputTv(80 + mainChar->Add_TvSize, 120 + mainChar->Add_TvSize);
+					}
+					else
 						if (count->Frame10 == 60)
 						{
-							mainChar->InputTv(40, 80);
+							mainChar->InputTv(40 + mainChar->Add_TvSize, 80 + mainChar->Add_TvSize);
 						}
 
-					if (count->Frame10 > 60)
-					{
-						count->Frame10 = 0;
-					}
+	if (count->Frame10 > 60)
+	{
+		count->Frame10 = 0;
+	}
+
 }
+
 
 // 10フレームたったら再度キー入力できるようになる
 void FrameCount(Count* count, KeyState* keyState)

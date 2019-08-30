@@ -158,6 +158,8 @@ void UpdateGameScene(Count* count, VariableNumber* var)
 
 	ChraMove(count, &keyState, &mainChar);
 
+	CharTextureChange(count, &mainChar,bullet);
+
 	HitJudge(&mainChar);
 
 	SetBeam(count, var, MapChipList, &beamSide, &beamVerticality,1);

@@ -10,6 +10,8 @@ void InptKeystate(Count* count, KeyState* keyState, Bullet bullet[5]);
 
 void ChraMove(Count* count, KeyState* keyState, MainChar* mainChar);
 
+void CharTextureChange(Count* count, MainChar* mainChar, Bullet* bullet);
+
 void FrameCount(Count* count, KeyState* keyState);
 
 void HitJudge(MainChar* mainChar);

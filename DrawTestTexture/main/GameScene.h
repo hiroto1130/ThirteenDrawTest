@@ -17,7 +17,6 @@ public:
 	float m_PosTv      = (float)  0 / 512;
 	float m_PosTv_Size = (float) 40 / 512;
 
-	float Add_Tv;
 	float Add_TvSize;
 	void InputTv(int Tv,int Tv_Size);
 };
@@ -74,7 +73,7 @@ public:
 	float m_PosTv      = (float)   0 / 512;
 	float m_PosTv_Size = (float)  40 / 512;
 
-	float BulletCount = 5;
+	float BulletCount = 0;
 
 };
 
