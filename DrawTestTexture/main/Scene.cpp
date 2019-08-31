@@ -133,4 +133,5 @@ void FrameCount(Count* count)
 	count->Frame8 = count->Frame8 + 1;
 	count->Frame9 = count->Frame9 + 1;
 	count->Frame10 = count->Frame10 + 1;
+	count->StarDrawCount = count->StarDrawCount + 1;
 }

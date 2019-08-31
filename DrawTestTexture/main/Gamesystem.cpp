@@ -90,15 +90,20 @@ void InptKeystate(Count* count, KeyState *keyState, Bullet bullet[5])
 	{
 		bullet->BulletCount = 0;
 	}
+
 }
+
 
 void MainChar::InputTv(int Tu, int Tu_Size)
 {
+
 	m_PosTu = (float) Tu / 1024;
 	m_PosTu_Size =(float) Tu_Size / 1024;
+
 }
 
-// 10フレーム経たないと動かない
+// 10フレーム経たないと動かない(合計10フレーム,1フレーム X座標 +- 4 )
+
 void ChraMove(Count* count, KeyState *keyState,MainChar * mainChar)
 {
 	if (count->Frame4 < 10)
@@ -178,6 +183,7 @@ void FrameCount(Count* count, KeyState* keyState)
 // ゲーム画面の当たり判定
 void HitJudge(MainChar* mainChar)
 {
+
 	if (mainChar->m_PosX < 80)
 	{
 		mainChar->m_PosX = mainChar->m_PosX + 4;
@@ -195,31 +201,68 @@ void HitJudge(MainChar* mainChar)
 				{
 					mainChar->m_PosY = mainChar->m_PosY - 4;
 				}
+
 }
 
-// ビーム描画位置入力関数
+// ビーム描画位置入力関数(横)
 void BeamSide::InputSidePosTv(float Tv, float TvSize)
 {
 	m_PosTv = Tv / 1024;
 	m_PosTv_Size = TvSize / 1024;
 }
 
+// ビーム描画位置入力関数(縦)
 void BeamVerticality::InputVerticalityPosTv(float Tv, float TvSize)
 {
 	m_PosTu = Tv / 1024;
 	m_PosTu_Size = TvSize / 1024;
 }
 
-
-
-
-// ビーム(予兆)の描画設定
-void SetBeam(Count* count, VariableNumber* var,int MapChipList[20][28], BeamSide* beamSide,BeamVerticality*  beamVerticality,int BeamNnmber)
+void SetBeams(Count* count, VariableNumber* var, int MapChipList[20][28], BeamSide* beamSide, BeamVerticality* beamVerticality, int WithDarwNumber, int HeightDrawNumber)
 {
-	for (int a = 0; a < count->BeamCount; a++)
+	std::mt19937 mt{ std::random_device{}() };
+
+	for (int WithDrawCount = 0; WithDrawCount < WithDarwNumber; WithDrawCount++)
 	{
+		std::uniform_int_distribution<int> r_with(1, 25); // 1 28
+		int with = r_with(mt);
+
+		for (int a = 0; a < 20; a++)
+		{
+			for (int c = 0; c < 3; c++)
+			{
+				MapChipList[a][with + c] = 2;
+
+			}
+
+		}
+		beamVerticality->m_PosX = with * 40 + 80;
+
 	}
 
+	for (int HeightDrawCount = 0; HeightDrawCount < HeightDrawNumber; HeightDrawCount++)
+	{
+		std::uniform_int_distribution<int> r_hight(1, 17); // 1 20
+		int hight = r_hight(mt);
+
+		for (int a = 0; a < 28; a++)
+		{
+			for (int b = 0; b < 3; b++)
+			{
+				MapChipList[hight + b][a] = 2;
+			}
+		}
+
+		beamSide->m_PosY = hight * 40 + 80;
+
+		break;
+	}
+	
+}
+
+// ビーム(予兆)の描画設定(一本の時のみ)
+void SetBeam_first(Count* count, VariableNumber* var, int MapChipList[20][28], BeamSide* beamSide, BeamVerticality* beamVerticality, int BeamNnmber)
+{
 	if (count->Frame3 == (60 * 8))
 	{
 		std::mt19937 mt{ std::random_device{}() };
@@ -231,7 +274,6 @@ void SetBeam(Count* count, VariableNumber* var,int MapChipList[20][28], BeamSide
 		var->temp = swich(mt);
 		int with = r_with(mt);
 		int hight = r_hight(mt);
-
 
 		switch (var->temp)
 		{
@@ -248,11 +290,9 @@ void SetBeam(Count* count, VariableNumber* var,int MapChipList[20][28], BeamSide
 				}
 
 			}
-            beamVerticality->m_PosX = with * 40 + 80;
-			
-			count->Frame3 = 0; 
-
+			beamVerticality->m_PosX = with * 40 + 80;
 			break;
+
 		case 2: // hight
 
 			for (int a = 0; a < 28; a++)
@@ -262,14 +302,13 @@ void SetBeam(Count* count, VariableNumber* var,int MapChipList[20][28], BeamSide
 					MapChipList[hight + b][a] = 2;
 				}
 			}
-
 			beamSide->m_PosY = hight * 40 + 80;
-			count->Frame3 = 0;
 
 			break;
 		}
 		var->BeamState = 1;
 		count->Frame2 = 0;
+		count->Frame3 = 0;
 
 	}
 
@@ -292,7 +331,9 @@ void SetBeam(Count* count, VariableNumber* var,int MapChipList[20][28], BeamSide
 		}
 	}
 
-	
+	/////////////////////////////////////////////////////////////////////// 描画関連 /////////////////////////////////////////////////////////////////
+
+	/*
 	if (count->Frame2 == 120)
 	{
 		if (var->temp == 1)
@@ -366,6 +407,7 @@ void SetBeam(Count* count, VariableNumber* var,int MapChipList[20][28], BeamSide
 		beamSide->BeamSideFlag = false;
 		beamVerticality->BeamVerticalityeFlag = false;
 	}
+	*/
 
 }
 
@@ -732,4 +774,51 @@ void ShotHitJudge(Bullet bullet[5], KeyState* keyState,MainChar* mainChar )
 					bullet[0].m_PosX = mainChar->m_PosX;
 					bullet[0].m_PosY = mainChar->m_PosY;
 				}
+}
+
+void StarDraw(Star star[12],Count* count)
+{
+	if (count->StarDrawCount == (5 * 60))
+	{
+		for(int a = 0; a < 4; a ++ )
+		{
+			if (star[a].DrawFlag == false)
+			{
+				std::mt19937 mt{ std::random_device{}() };
+
+				std::uniform_int_distribution<int> With(0, 27);
+				std::uniform_int_distribution<int> Height(0, 19);
+
+				int with = With(mt);
+				int height = Height(mt);
+
+				star[a].m_PosX = with * 40 + 80;
+				star[a].m_PosY = height * 40 + 80;
+
+				star[a].DrawFlag = true;
+			}
+		
+		}
+
+		count->StarDrawCountReset();
+	}
+
+
+}
+
+void HitBulletStar(Bullet* bullet, Star star[12], Count* count)
+{
+	for (int a = 0; a < 12; a++)
+	{
+
+		if ((bullet->m_PosX + 40 > star[a].m_PosX /*玉の右のあたり判定*/) && (bullet->m_PosX < star[a].m_PosX + 40)/*玉の左のあたり判定*/)
+		{
+
+			if ((bullet->m_PosY < star[a].m_PosY + 40)/*玉が下から当たった時ののあたり判定*/ && (bullet->m_PosY + 40 > star[a].m_PosY/*玉が上から当たった時のあたり判定*/))
+			{
+				count->StarCount = count->StarCount + 1;
+				star[a].DrawFlag = false;
+			}
+		}
+	}
 }

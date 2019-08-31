@@ -123,16 +123,16 @@ public:
 
 class Star
 {
-	float PosX;
-	float PosY;
+public:
+	float m_PosX;
+	float m_PosY;
 	float m_DrawSize = 40;
-	float m_PosTu      = (float) 160 / 512;
-	float m_PosTu_Size = (float) 200 / 512;
-	float m_PosTv      = (float)   0 / 512;
-	float m_PosTv_Size = (float)  40 / 512;
-	float StarCount = 0;// 取った星の数
+	float m_PosTu      = (float)   0 / 1024;
+	float m_PosTu_Size = (float)  40 / 1024;
+	float m_PosTv      = (float)  80 /  512;
+	float m_PosTv_Size = (float) 120 /  512;
+	bool DrawFlag = false;
 
 };
-
 
 #endif

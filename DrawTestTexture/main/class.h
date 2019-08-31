@@ -120,7 +120,12 @@ public:
 	int Frame10 = 0;
 	void Frame10Reset() { Frame10 = 0; }
 
-	int BeamCount = 0;
+	int StarDrawCount = 0;
+	void StarDrawCountReset() { StarDrawCount = 0; }
+
+	int BeamCount = 6;
+
+	float StarCount = 0;// 取った星の数
 
 	void AllReset();
 };
