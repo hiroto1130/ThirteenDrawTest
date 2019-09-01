@@ -34,6 +34,8 @@ void ShotHitJudge(Bullet bullet[5], KeyState* keyState, MainChar* mainChar);
 
 void StarDraw(Star star[12], Count* count);
 
-void HitBulletStar(Bullet* bullet, Star star[12],Count* count);
+void HitBulletStar(Bullet* bullet, Star star[12],Count* count, KeyState* keyState);
+
+void HitCharMeteorite(Meteorite meteorite[], MainChar* mainChar, Count* count, KeyState* keyState);
 
 #endif // !GAMESYSTEM_H

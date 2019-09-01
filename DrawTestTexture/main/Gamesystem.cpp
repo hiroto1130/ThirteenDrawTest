@@ -128,6 +128,7 @@ void ChraMove(Count* count, KeyState *keyState,MainChar * mainChar)
 	}
 }
 
+// 自キャラのモーション
 void CharTextureChange(Count* count, MainChar* mainChar,Bullet * bullet)
 {
 	mainChar->Add_TvSize = 160 * bullet->BulletCount;
@@ -218,6 +219,7 @@ void BeamVerticality::InputVerticalityPosTv(float Tv, float TvSize)
 	m_PosTu_Size = TvSize / 1024;
 }
 
+// ビーム描画(複数)
 void SetBeams(Count* count, VariableNumber* var, int MapChipList[20][28], BeamSide* beamSide, BeamVerticality* beamVerticality, int WithDarwNumber, int HeightDrawNumber)
 {
 	std::mt19937 mt{ std::random_device{}() };
@@ -411,11 +413,14 @@ void SetBeam_first(Count* count, VariableNumber* var, int MapChipList[20][28], B
 
 }
 
+// ビームの描画処理
 void DrawBeam()
 {
 
 
 }
+
+// 隕石の描画(一段階目)
 void DrawMeteorite(Count* count, VariableNumber* var,int MapChipList[20][28], Meteorite meteorite[])
 {
 	// if(GetKeyStatus(DIK_M))
@@ -495,6 +500,7 @@ void DrawMeteorite(Count* count, VariableNumber* var,int MapChipList[20][28], Me
 	}
 }
 
+// 隕石の描画(二段階目)
 void DrawMeteoriteTwo(Count* count, VariableNumber* var, int MapChipList[20][28], Meteorite meteorite[])
 {
 	// 
@@ -575,6 +581,44 @@ void DrawMeteoriteTwo(Count* count, VariableNumber* var, int MapChipList[20][28]
 	}
 }
 
+void HitCharMeteorite(Meteorite meteorite[], MainChar* mainChar, Count* count, KeyState* keyState)
+{
+	for (int a = 0; a < 8; a++)
+	{
+		if (((mainChar->m_PosX + 40 > meteorite[a].m_PosX /*自キャラの右のあたり判定*/) && (mainChar->m_PosX < meteorite[a].m_PosX + 40)/*自キャラの左のあたり判定*/))
+		{
+			if ((mainChar->m_PosY < meteorite[a].m_PosY + 40)/*自キャラが下から当たった時ののあたり判定*/ && (mainChar->m_PosY + 40 > meteorite[a].m_PosY/*自キャラが上から当たった時のあたり判定*/))
+			{
+				if (keyState->Move == 1)
+				{
+					// down
+					mainChar->m_PosY = mainChar->m_PosY - 4;
+
+				}else
+					if (keyState->Move== 2)
+					{
+						// up
+						mainChar->m_PosY = mainChar->m_PosY + 4;
+
+					}else
+						if (keyState->Move == 3)
+						{
+							// lkeft
+							mainChar->m_PosX = mainChar->m_PosX + 4;
+
+						}else
+							if (keyState->Move == 4)
+							{
+								// right
+								mainChar->m_PosX = mainChar->m_PosX - 4;
+
+							}
+			}
+		}
+	}
+}
+
+// 敵の描画
 void DrawEnemy(Count* count, VariableNumber* var, int MapChipList[20][28], Enemy_Green e_green[],Enemy_White e_white[])
 {
 	
@@ -700,6 +744,7 @@ void Shot(Bullet bullet[5] , KeyState* keyState)
 	} 
 }
 
+// 弾丸の移動描画
 void ShotMove(KeyState* keyState, Bullet bullet[5] , MainChar* mainChar)
 {
 
@@ -741,6 +786,7 @@ void ShotMove(KeyState* keyState, Bullet bullet[5] , MainChar* mainChar)
 
 }
 
+// 弾丸のあたり判定
 void ShotHitJudge(Bullet bullet[5], KeyState* keyState,MainChar* mainChar )
 {
 	if (bullet[0].m_PosX < 80)
@@ -776,6 +822,7 @@ void ShotHitJudge(Bullet bullet[5], KeyState* keyState,MainChar* mainChar )
 				}
 }
 
+// 星の描画
 void StarDraw(Star star[12],Count* count)
 {
 	if (count->StarDrawCount == (5 * 60))
@@ -806,18 +853,22 @@ void StarDraw(Star star[12],Count* count)
 
 }
 
-void HitBulletStar(Bullet* bullet, Star star[12], Count* count)
+// 星と弾丸のあたり判定
+void HitBulletStar(Bullet* bullet, Star star[12], Count* count,KeyState * keyState)
 {
-	for (int a = 0; a < 12; a++)
+	if (keyState->Shot > 0)
 	{
-
-		if ((bullet->m_PosX + 40 > star[a].m_PosX /*玉の右のあたり判定*/) && (bullet->m_PosX < star[a].m_PosX + 40)/*玉の左のあたり判定*/)
+		for (int a = 0; a < 12; a++)
 		{
 
-			if ((bullet->m_PosY < star[a].m_PosY + 40)/*玉が下から当たった時ののあたり判定*/ && (bullet->m_PosY + 40 > star[a].m_PosY/*玉が上から当たった時のあたり判定*/))
+			if ((bullet->m_PosX + 40 > star[a].m_PosX /*玉の右のあたり判定*/) && (bullet->m_PosX < star[a].m_PosX + 40)/*玉の左のあたり判定*/)
 			{
-				count->StarCount = count->StarCount + 1;
-				star[a].DrawFlag = false;
+
+				if ((bullet->m_PosY < star[a].m_PosY + 40)/*玉が下から当たった時ののあたり判定*/ && (bullet->m_PosY + 40 > star[a].m_PosY/*玉が上から当たった時のあたり判定*/))
+				{
+					count->StarCount = count->StarCount + 1;
+					star[a].DrawFlag = false;
+				}
 			}
 		}
 	}

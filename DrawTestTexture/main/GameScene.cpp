@@ -195,7 +195,9 @@ void UpdateGameScene(Count* count, VariableNumber* var)
 
 	StarDraw(star,count);
 
-	HitBulletStar(bullet, star,count);
+	HitBulletStar(bullet, star,count,&keyState);
+
+	HitCharMeteorite(meteorite,&mainChar,count,&keyState);
 
 	if (GetKeyStatus(DIK_RETURN))
 	{
