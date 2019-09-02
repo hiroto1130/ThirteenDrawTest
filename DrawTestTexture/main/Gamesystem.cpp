@@ -335,7 +335,7 @@ void SetBeam_first(Count* count, VariableNumber* var, int MapChipList[20][28], B
 
 	/////////////////////////////////////////////////////////////////////// 描画関連 /////////////////////////////////////////////////////////////////
 
-	/*
+	
 	if (count->Frame2 == 120)
 	{
 		if (var->temp == 1)
@@ -409,7 +409,7 @@ void SetBeam_first(Count* count, VariableNumber* var, int MapChipList[20][28], B
 		beamSide->BeamSideFlag = false;
 		beamVerticality->BeamVerticalityeFlag = false;
 	}
-	*/
+	
 
 }
 
@@ -825,7 +825,7 @@ void ShotHitJudge(Bullet bullet[5], KeyState* keyState,MainChar* mainChar )
 // 星の描画
 void StarDraw(Star star[12],Count* count)
 {
-	if (count->StarDrawCount == (15 * 60))
+	if (count->StarDrawCount == (5 * 60))
 	{
 		for(int a = 0; a < 4; a ++ )
 		{

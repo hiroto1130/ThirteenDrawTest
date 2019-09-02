@@ -149,6 +149,11 @@
     <ClCompile Include="ResultScene..cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="Gamesystem.cpp" />
+    <ClCompile Include="MainCara.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Meteorite.cpp" />
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Beam.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="SetScene.cpp" />
@@ -161,6 +166,11 @@
     <ClInclude Include="class.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="Gamesystem.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="MainChar.h" />
+    <ClInclude Include="Meteorite.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Beam.h" />
     <ClInclude Include="Option.h" />
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="GameScene.h" />

@@ -13,6 +13,9 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{fac4136f-48a0-4411-8e6b-7f649a967ab2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameSystem">
+      <UniqueIdentifier>{64ca51a0-d520-4c6f-aaf7-e70be1c8b760}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -51,6 +54,21 @@
     <ClCompile Include="Gamesystem.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="MainCara.cpp">
+      <Filter>GameSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>GameSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Meteorite.cpp">
+      <Filter>GameSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>GameSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Beam.cpp">
+      <Filter>GameSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DrawTexture.h">
@@ -88,6 +106,21 @@
     </ClInclude>
     <ClInclude Include="Gamesystem.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Beam.h">
+      <Filter>GameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>GameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Meteorite.h">
+      <Filter>GameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>GameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="MainChar.h">
+      <Filter>GameSystem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
