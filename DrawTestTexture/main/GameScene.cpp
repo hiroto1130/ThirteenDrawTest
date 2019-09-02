@@ -195,7 +195,7 @@ void UpdateGameScene(Count* count, VariableNumber* var)
 
 	StarDraw(star,count);
 
-	HitBulletStar(bullet, star,count,&keyState);
+	HitBulletStar(&mainChar, star,count,&keyState);
 
 	HitCharMeteorite(meteorite,&mainChar,count,&keyState);
 

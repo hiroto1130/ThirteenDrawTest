@@ -46,9 +46,9 @@ void InptKeystate(Count* count, KeyState *keyState, Bullet bullet[5])
 			keyState->Shot = 1;
 			bullet[0].ShotFlag = true;
 
-			if (bullet->BulletCount < 4)
+			if (count->BulletCount < 4)
 			{
-				bullet->BulletCount = bullet->BulletCount + 1;
+				count->BulletCount = count->BulletCount + 1;
 			}
 
 		}
@@ -58,9 +58,9 @@ void InptKeystate(Count* count, KeyState *keyState, Bullet bullet[5])
 				keyState->Shot = 2;
 				bullet[0].ShotFlag = true;
 
-				if (bullet->BulletCount < 4)
+				if (count->BulletCount < 4)
 				{
-					bullet->BulletCount = bullet->BulletCount + 1;
+					count->BulletCount = count->BulletCount + 1;
 				}
 			}
 		if (GetKeyStatus(DIK_LEFT))
@@ -68,9 +68,9 @@ void InptKeystate(Count* count, KeyState *keyState, Bullet bullet[5])
 			keyState->Shot = 3;
 			bullet[0].ShotFlag = true;
 
-			if (bullet->BulletCount < 4)
+			if (count->BulletCount < 4)
 			{
-				bullet->BulletCount = bullet->BulletCount + 1;
+				count->BulletCount = count->BulletCount + 1;
 			}
 		}
 		else
@@ -79,9 +79,9 @@ void InptKeystate(Count* count, KeyState *keyState, Bullet bullet[5])
 				keyState->Shot = 4;
 				bullet[0].ShotFlag = true;
 
-				if (bullet->BulletCount < 4)
+				if (count->BulletCount < 4)
 				{
-					bullet->BulletCount = bullet->BulletCount + 1;
+					count->BulletCount = count->BulletCount + 1;
 				}
 			}
 	}
@@ -131,7 +131,7 @@ void ChraMove(Count* count, KeyState *keyState,MainChar * mainChar)
 // 自キャラのモーション
 void CharTextureChange(Count* count, MainChar* mainChar,Bullet * bullet)
 {
-	mainChar->Add_TvSize = 160 * bullet->BulletCount;
+	mainChar->Add_TvSize = 160 * count->BulletCount;
 
 	if (count->Frame10 == 10)
 	{
@@ -854,20 +854,26 @@ void StarDraw(Star star[12],Count* count)
 }
 
 // 星と弾丸のあたり判定
-void HitBulletStar(Bullet* bullet, Star star[12], Count* count,KeyState * keyState)
+void HitBulletStar(MainChar* mainChar, Star star[12], Count* count, KeyState* keyState)
 {
-	if (keyState->Shot > 0)
+
+	for (int a = 0; a < 12; a++)
 	{
-		for (int a = 0; a < 12; a++)
+
+		if ((mainChar->m_PosX + 40 > star[a].m_PosX /*玉の右のあたり判定*/) && (mainChar->m_PosX < star[a].m_PosX + 40)/*玉の左のあたり判定*/)
 		{
 
-			if ((bullet->m_PosX + 40 > star[a].m_PosX /*玉の右のあたり判定*/) && (bullet->m_PosX < star[a].m_PosX + 40)/*玉の左のあたり判定*/)
+			if ((mainChar->m_PosY < star[a].m_PosY + 40)/*玉が下から当たった時ののあたり判定*/ && (mainChar->m_PosY + 40 > star[a].m_PosY/*玉が上から当たった時のあたり判定*/))
 			{
+				count->StarCount = count->StarCount + 1;
+				star[a].DrawFlag = false;
 
-				if ((bullet->m_PosY < star[a].m_PosY + 40)/*玉が下から当たった時ののあたり判定*/ && (bullet->m_PosY + 40 > star[a].m_PosY/*玉が上から当たった時のあたり判定*/))
+				star[a].m_PosX = 0;
+				star[a].m_PosY = 0;
+
+				if (count->BulletCount > 0 && count->BulletCount < 5)
 				{
-					count->StarCount = count->StarCount + 1;
-					star[a].DrawFlag = false;
+					count->BulletCount = count->BulletCount - 1;
 				}
 			}
 		}

@@ -127,6 +127,8 @@ public:
 
 	float StarCount = 0;// 取った星の数
 
+	float BulletCount = 0;
+
 	void AllReset();
 };
 
