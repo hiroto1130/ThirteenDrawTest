@@ -13,8 +13,8 @@
 
 
 extern int g_SceneStep;
-void DrawGameScene(Pointa* point, MapChipData MapData, VariableNumber* var);
-void InitGameScene(Pointa* point);
+void DrawGameScene(DirectX* directX, MapChipData MapData, VariableNumber* var);
+void InitGameScene(DirectX* directX);
 void UpdateGameScene(Count* count, VariableNumber* var);
 SceneId FinisGameScene();
 int* MAPR[22];
@@ -52,14 +52,14 @@ int MapChipList[MAP_SIZE_HEIGHT][MAP_SIZE_WIDTH]
 
 
 
-SceneId GameSceneMain(Pointa* point, VariableNumber* var, Count* count)
+SceneId GameSceneMain(DirectX* directX, VariableNumber* var, Count* count)
 {
 	switch (GetCurrentSceneStep())
 	{
 		// 初期化
 	case SceneStep::InitStep:
 		count->AllReset();
-		InitGameScene(point);
+		InitGameScene(directX);
 		break;
 		// 本編
 	case SceneStep::MainStep:
@@ -82,23 +82,23 @@ MainChar mainChar;
 KeyState keyState;
 Star star[12];
 
-void DrawGameScene(Pointa* point, MapChipData MapData,VariableNumber* var)
+void DrawGameScene(DirectX* directX, MapChipData MapData,VariableNumber* var)
 {
 	// 背景
-	DrawTest( 0, 0, 1280, 960, 0, 0, 1, 1, &GameTextureData.m_pTexture[GameTextureList::BackTexture], *point);
+	DrawTest( 0, 0, 1280, 960, 0, 0, 1, 1, &GameTextureData.m_pTexture[GameTextureList::BackTexture], *directX);
 	// マップチップ
-	DrawMapChip(point, MapData, &GameTextureData.m_pTexture[GameTextureList::MapChipTexture], MapChipList);
+	DrawMapChip(directX, MapData, &GameTextureData.m_pTexture[GameTextureList::MapChipTexture], MapChipList);
 	// 自キャラ 操作キャラ
-	DrawTest(mainChar.m_PosX, mainChar.m_PosY, mainChar.DrawSize, mainChar.DrawSize, mainChar.m_PosTu, mainChar.m_PosTv, mainChar.m_PosTu_Size, mainChar.m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *point);
+	DrawTest(mainChar.m_PosX, mainChar.m_PosY, mainChar.DrawSize, mainChar.DrawSize, mainChar.m_PosTu, mainChar.m_PosTv, mainChar.m_PosTu_Size, mainChar.m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *directX);
 	
 	if (var->EnemyDrawState == 1)
 	{
 		// 敵1 緑敵
-		DrawTest(e_green[0].m_PosX, e_green[0].m_PosY, e_green[0].m_DrawSize, e_green[0].m_DrawSize, e_green[0].m_PosTu, e_green[0].m_PosTv, e_green[0].m_PosTu_Size, e_green[0].m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *point);
-		DrawTest(e_green[1].m_PosX, e_green[1].m_PosY, e_green[1].m_DrawSize, e_green[1].m_DrawSize, e_green[1].m_PosTu, e_green[1].m_PosTv, e_green[1].m_PosTu_Size, e_green[1].m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *point);
+		DrawTest(e_green[0].m_PosX, e_green[0].m_PosY, e_green[0].m_DrawSize, e_green[0].m_DrawSize, e_green[0].m_PosTu, e_green[0].m_PosTv, e_green[0].m_PosTu_Size, e_green[0].m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *directX);
+		DrawTest(e_green[1].m_PosX, e_green[1].m_PosY, e_green[1].m_DrawSize, e_green[1].m_DrawSize, e_green[1].m_PosTu, e_green[1].m_PosTv, e_green[1].m_PosTu_Size, e_green[1].m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *directX);
 		// 敵2 紫敵
-		DrawTest(e_white[0].m_PosX, e_white[0].m_PosY, e_white[0].m_DrawSize, e_white[0].m_DrawSize, e_white[0].m_PosTu, e_white[0].m_PosTv, e_white[0].m_PosTu_Size, e_white[0].m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *point);
-		DrawTest(e_white[1].m_PosX, e_white[1].m_PosY, e_white[1].m_DrawSize, e_white[1].m_DrawSize, e_white[1].m_PosTu, e_white[1].m_PosTv, e_white[1].m_PosTu_Size, e_white[1].m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *point);
+		DrawTest(e_white[0].m_PosX, e_white[0].m_PosY, e_white[0].m_DrawSize, e_white[0].m_DrawSize, e_white[0].m_PosTu, e_white[0].m_PosTv, e_white[0].m_PosTu_Size, e_white[0].m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *directX);
+		DrawTest(e_white[1].m_PosX, e_white[1].m_PosY, e_white[1].m_DrawSize, e_white[1].m_DrawSize, e_white[1].m_PosTu, e_white[1].m_PosTv, e_white[1].m_PosTu_Size, e_white[1].m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *directX);
 	}
 
 	// メテオ(第一弾)
@@ -106,7 +106,7 @@ void DrawGameScene(Pointa* point, MapChipData MapData,VariableNumber* var)
 	{
 			for (int a = 0; a < 4; a++)
 			{
-				DrawTest(meteorite[a].m_PosX, meteorite[a].m_PosY, meteorite[a].m_DrawSize, meteorite[a].m_DrawSize, meteorite[a].m_PosTu, meteorite[a].m_Postv, meteorite[a].m_Tu_Size, meteorite[a].m_Tv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *point);
+				DrawTest(meteorite[a].m_PosX, meteorite[a].m_PosY, meteorite[a].m_DrawSize, meteorite[a].m_DrawSize, meteorite[a].m_PosTu, meteorite[a].m_Postv, meteorite[a].m_Tu_Size, meteorite[a].m_Tv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *directX);
 			}
 		
 	}
@@ -116,7 +116,7 @@ void DrawGameScene(Pointa* point, MapChipData MapData,VariableNumber* var)
 	{
 		for (int a = 4; a < 8; a++)
 		{
-			DrawTest(meteorite[a].m_PosX, meteorite[a].m_PosY, meteorite[a].m_DrawSize, meteorite[a].m_DrawSize, meteorite[a].m_PosTu, meteorite[a].m_Postv, meteorite[a].m_Tu_Size, meteorite[a].m_Tv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *point);
+			DrawTest(meteorite[a].m_PosX, meteorite[a].m_PosY, meteorite[a].m_DrawSize, meteorite[a].m_DrawSize, meteorite[a].m_PosTu, meteorite[a].m_Postv, meteorite[a].m_Tu_Size, meteorite[a].m_Tv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *directX);
 		}
 
 	}
@@ -126,20 +126,20 @@ void DrawGameScene(Pointa* point, MapChipData MapData,VariableNumber* var)
 	{
 		if (bullet[a].ShotFlag == true)
 		{
-			DrawTest(bullet[a].m_PosX, bullet[a].m_PosY, bullet->m_DrawSize, bullet->m_DrawSize,bullet->m_PosTu, bullet->m_PosTv, bullet->m_PosTu_Size, bullet->m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *point);
+			DrawTest(bullet[a].m_PosX, bullet[a].m_PosY, bullet->m_DrawSize, bullet->m_DrawSize,bullet->m_PosTu, bullet->m_PosTv, bullet->m_PosTu_Size, bullet->m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *directX);
 		}
 	}
 
 	// ビーム横描画
 	if (beamSide.BeamSideFlag == true)
 	{
-		DrawTest(beamSide.m_PosX, /**/beamSide.m_PosY, beamSide.m_DrawSizeWidth, beamSide.m_DrawSizeHight, beamSide.m_PosTu, beamSide.m_PosTv, beamSide.m_PosTu_Size, beamSide.m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::BeamSideTextutre], *point);
+		DrawTest(beamSide.m_PosX, /**/beamSide.m_PosY, beamSide.m_DrawSizeWidth, beamSide.m_DrawSizeHight, beamSide.m_PosTu, beamSide.m_PosTv, beamSide.m_PosTu_Size, beamSide.m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::BeamSideTextutre], *directX);
 	}
 
 	// ビーム縦描画
 	if(beamVerticality.BeamVerticalityeFlag == true)
 	{
-		DrawTest(/**/beamVerticality.m_PosX, beamVerticality.m_PosY, beamVerticality.m_DrawSizeWidth, beamVerticality.m_DrawSizeHight, beamVerticality.m_PosTu, beamVerticality.m_PosTv, beamVerticality.m_PosTu_Size, beamVerticality.m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::BeamVerticalityTexture], *point);
+		DrawTest(/**/beamVerticality.m_PosX, beamVerticality.m_PosY, beamVerticality.m_DrawSizeWidth, beamVerticality.m_DrawSizeHight, beamVerticality.m_PosTu, beamVerticality.m_PosTv, beamVerticality.m_PosTu_Size, beamVerticality.m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::BeamVerticalityTexture], *directX);
 	}
 
 	// 星の描画(基本4つ、最大12)
@@ -147,20 +147,20 @@ void DrawGameScene(Pointa* point, MapChipData MapData,VariableNumber* var)
 	{
 		if (star[a].DrawFlag == true)
 		{
-			DrawTest(star[a].m_PosX, star[a].m_PosY, star->m_DrawSize, star->m_DrawSize, star->m_PosTu, star->m_PosTv, star->m_PosTu_Size, star->m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *point);
+			DrawTest(star[a].m_PosX, star[a].m_PosY, star->m_DrawSize, star->m_DrawSize, star->m_PosTu, star->m_PosTv, star->m_PosTu_Size, star->m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *directX);
 		}
 	}
 }
 
 
 // テクスチャ読み込み
-void InitGameScene(Pointa* point)
+void InitGameScene(DirectX* directX)
 {
-	LoadTexture("Texture/main_back.png", &GameTextureData.m_pTexture[GameTextureList::BackTexture], 0, point);
-	LoadTexture("Texture/map_chip2.png", &GameTextureData.m_pTexture[GameTextureList::MapChipTexture], 0, point);
-	LoadTexture("Texture/character.png", &GameTextureData.m_pTexture[GameTextureList::ChraTexture], 0, point);
-	LoadTexture("Texture/beam_Side.png", &GameTextureData.m_pTexture[GameTextureList::BeamSideTextutre], 0, point);
-	LoadTexture("Texture/beam_Ver.png", &GameTextureData.m_pTexture[GameTextureList::BeamVerticalityTexture], 0, point);
+	LoadTexture("Texture/main_back.png", &GameTextureData.m_pTexture[GameTextureList::BackTexture], 0,           directX);
+	LoadTexture("Texture/map_chip2.png", &GameTextureData.m_pTexture[GameTextureList::MapChipTexture], 0,        directX);
+	LoadTexture("Texture/character.png", &GameTextureData.m_pTexture[GameTextureList::ChraTexture], 0,           directX);
+	LoadTexture("Texture/beam_Side.png", &GameTextureData.m_pTexture[GameTextureList::BeamSideTextutre], 0,      directX);
+	LoadTexture("Texture/beam_Ver.png", &GameTextureData.m_pTexture[GameTextureList::BeamVerticalityTexture], 0, directX);
 
 	ChangeSceneStep(SceneStep::MainStep);
 }

@@ -1,9 +1,9 @@
 ﻿#ifndef _RESULTSCENE_H_ 
 #define _RESULTSCNEN_H_
 
-SceneId ResultSceneMain(Pointa* point, Count* count);
+SceneId ResultSceneMain(DirectX* directX, Count* count);
 
-void DrawResultScene(Pointa* point, Count* count);
+void DrawResultScene(DirectX* directX, Count* count);
 
 
 class ResultTextureSize

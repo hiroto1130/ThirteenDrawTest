@@ -2,8 +2,8 @@
 #define _TIRLESCENE_H_
 
 
-SceneId TitleSceneMain(Pointa* point, Count* count);
+SceneId TitleSceneMain(DirectX* directX, Count* count);
 
-void DrawTitleScene(Pointa* point, Count* count);
+void DrawTitleScene(DirectX* directX, Count* count);
 
 #endif 

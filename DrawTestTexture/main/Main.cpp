@@ -8,14 +8,14 @@
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance,
 	LPSTR lpCmpLine, INT nCmdShow)
 {
-	Pointa point;
+	DirectX directX;
 	MapChipData MapData;
 	VariableNumber variable;
 	Count count;
 	HWND* hWnd;
 
 	// MapChipData MapData;
-	if ((hWnd = InitEngine(1280, 960, hInst, &point)) == NULL)
+	if ((hWnd = InitEngine(1280, 960, hInst, &directX)) == NULL)
 	{
 		return 0;
 	}
@@ -47,7 +47,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance,
 					
 				}
 				
-				UpdateScene(&point, MapData, &variable, &count);
+				UpdateScene(&directX, MapData, &variable, &count);
 			}
 			prevtime = time;
 		}
@@ -55,7 +55,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInstance,
 	}
 
 	// エンジン終了
-	EndEngine(point);
+	EndEngine(directX);
 
 	return 0;
 }

@@ -5,8 +5,8 @@
 #include"Device.h"
 #include"SetScene.h"
 
-void DrawSetScene(Pointa* point, Count* count, VariableNumber* var);
-void InitSetScene(Pointa* point);
+void DrawSetScene(DirectX* directX, Count* count, VariableNumber* var);
+void InitSetScene(DirectX* directX);
 void ResetSetScene(Count* count, VariableNumber* var);
 void UpdateSetScene();
 SceneId FinisSetScene();
@@ -16,13 +16,13 @@ static bool KeyFlag = false;
 
 TEXTUREDATA SetTextureData;
 
-SceneId SetSceneMain(Pointa* point, Count* count, VariableNumber* var)
+SceneId SetSceneMain(DirectX* directX, Count* count, VariableNumber* var)
 {
 	switch (GetCurrentSceneStep())
 	{
 		// 初期化
 	case SceneStep::InitStep:
-		InitSetScene(point);
+		InitSetScene(directX);
 		break;
 		// 本編
 	case SceneStep::MainStep:
@@ -38,7 +38,7 @@ SceneId SetSceneMain(Pointa* point, Count* count, VariableNumber* var)
 }
 
 // 描画設定等
-void DrawSetScene(Pointa* point, Count* count, VariableNumber* var)
+void DrawSetScene(DirectX* directX, Count* count, VariableNumber* var)
 {
 	//DrawTest(1092, 816, 274, 86, size.normal_s_tu2, size.normal_s_tv, size.normal_e_tu2, size.normal_e_tv, &SetTextureData.m_pTexture[SetTextureList::levelselectTexture], *point);
 	
@@ -47,7 +47,7 @@ void ResetSetScene(Count* count, VariableNumber* var)
 {
 };
 
-void InitSetScene(Pointa* point)
+void InitSetScene(DirectX* directXt)
 {
 	// LoadTexture("Texture/bg1.png", &SetTextureData.m_pTexture[SetTextureList::BackTexture], 0, point);
 

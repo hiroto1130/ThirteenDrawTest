@@ -1,8 +1,8 @@
 ﻿#include "class.h" 
 
-//Pointa point;
-HRESULT InitDinput(HWND*, Pointa*);
-HRESULT InitD3d(HWND*, Pointa*);
+//DirectX* directX;
+HRESULT InitDinput(HWND*, DirectX*);
+HRESULT InitD3d(HWND*, DirectX*);
 
 // キーボード //
 static const int MAX_KEY_NUMBER = 256;
@@ -11,16 +11,16 @@ BYTE KeyState[MAX_KEY_NUMBER];
 // 256の配列を持つ
 const int MASK_NUM = 0x80;
 
-HRESULT BuildDxDevice(HWND *hInst, Pointa* point)
+HRESULT BuildDxDevice(HWND *hInst, DirectX* directX)
 {
 	//// InitD3d が初期化されているかどうか ////
-	if (FAILED(InitD3d(hInst, point)))
+	if (FAILED(InitD3d(hInst, directX)))
 	{
 		return E_FAIL;
 	}
 
 	//// InitDinput 初期化されているかどうか ////
-	if (FAILED(InitDinput(hInst, point)))
+	if (FAILED(InitDinput(hInst, directX)))
 	{
 		return E_FAIL;
 	}
@@ -29,16 +29,16 @@ HRESULT BuildDxDevice(HWND *hInst, Pointa* point)
 	//point->pDirect3d = Direct3DCreate9(D3D_SDK_VERSION);
 
 	//// Direct3DCreate9 が ////
-	if (point->pDirect3d == NULL)
+	if (directX->pDirect3d == NULL)
 	{
 		return E_FAIL;
 	}
 	return S_OK;
 }
 
-HRESULT InitD3d(HWND *hInst, Pointa* point)
+HRESULT InitD3d(HWND *hInst, DirectX* directX)
 {
-	if (NULL == (point->pDirect3d = Direct3DCreate9(D3D_SDK_VERSION)))
+	if (NULL == (directX->pDirect3d = Direct3DCreate9(D3D_SDK_VERSION)))
 	{
 		return E_FAIL;
 	}
@@ -54,8 +54,8 @@ HRESULT InitD3d(HWND *hInst, Pointa* point)
 
 	//// デバイス生成 ////
 
-	if (FAILED(point->pDirect3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, *hInst,
-		D3DCREATE_MIXED_VERTEXPROCESSING, &d3dpp, &point->pDevice)))
+	if (FAILED(directX->pDirect3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, *hInst,
+		D3DCREATE_MIXED_VERTEXPROCESSING, &d3dpp, &directX->pDevice)))
 	{
 		return E_FAIL;
 	}
@@ -66,48 +66,48 @@ HRESULT InitD3d(HWND *hInst, Pointa* point)
 
 ////// directinput //////
 
-HRESULT InitDinput(HWND* hInst, Pointa* point)
+HRESULT InitDinput(HWND* hInst, DirectX* directX)
 {
 	HRESULT hr;
 
 	//// DirectInput8の作成 ////
-	if (FAILED(hr = DirectInput8Create(GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID * *)& point->pDinput, NULL)))
+	if (FAILED(hr = DirectInput8Create(GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID * *)& directX->pDinput, NULL)))
 	{
 		return hr;
 	}
 
 	//// InputDeviceを作成 ////         * どの入力デバイスから情報を受け取るか
-	if (FAILED(hr = point->pDinput->CreateDevice(GUID_SysKeyboard, &point->pkey, NULL)))
+	if (FAILED(hr = directX->pDinput->CreateDevice(GUID_SysKeyboard, &directX->pkey, NULL)))
 	{
 		return hr;
 	}
 
 	//// デバイスのフォーマット設定,形式 ////　　　* キーボード c_dfDIKeyboard マウス c_dfDIMouse
-	if (FAILED(hr = point->pkey->SetDataFormat(&c_dfDIKeyboard)))
+	if (FAILED(hr = directX->pkey->SetDataFormat(&c_dfDIKeyboard)))
 	{
 		return hr;
 	}
 
 	//// 協調レベルを設定 ////    * フォアグラウンド、バックグラウンド 排他的、非排他的 
-	if (FAILED(hr = point->pkey->SetCooperativeLevel(*hInst, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND)))
+	if (FAILED(hr = directX->pkey->SetCooperativeLevel(*hInst, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND)))
 	{
 		return hr;
 	}
 
 	//// 権限の取得 ////
-	point->pkey->Acquire();
+	directX->pkey->Acquire();
 
 	return S_OK;
 }
 
 ////// キーステータス更新関数 //////
-void UpdateKeyStatus(Pointa* point)
+void UpdateKeyStatus(DirectX* directX)
 {
-	HRESULT hr = point->pkey->Acquire();
+	HRESULT hr = directX->pkey->Acquire();
 
 	if ((hr == DI_OK) || (hr == S_FALSE))
 	{
-		point->pkey->GetDeviceState(sizeof(KeyState), &KeyState);
+		directX->pkey->GetDeviceState(sizeof(KeyState), &KeyState);
 	}
 
 }

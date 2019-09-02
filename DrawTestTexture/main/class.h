@@ -36,7 +36,7 @@ typedef struct
 //	MaxTexture
 //};
 
-class Pointa
+class DirectX
 {
 public:
 
@@ -194,7 +194,7 @@ enum ResultTextureList
 
 
 //共通のインスタンス
-extern Pointa point;
+extern DirectX directX;
 
 class MapChipData
 {

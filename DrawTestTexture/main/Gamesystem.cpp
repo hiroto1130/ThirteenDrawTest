@@ -418,6 +418,7 @@ void DrawBeam()
 {
 
 
+
 }
 
 // 隕石の描画(一段階目)
@@ -589,30 +590,29 @@ void HitCharMeteorite(Meteorite meteorite[], MainChar* mainChar, Count* count, K
 		{
 			if ((mainChar->m_PosY < meteorite[a].m_PosY + 40)/*自キャラが下から当たった時ののあたり判定*/ && (mainChar->m_PosY + 40 > meteorite[a].m_PosY/*自キャラが上から当たった時のあたり判定*/))
 			{
-				if (keyState->Move == 1)
+
+				switch (keyState->Move)
 				{
+				case 0:
+					break;
+				case 1:
 					// down
 					mainChar->m_PosY = mainChar->m_PosY - 4;
+					break;
+				case 2:
+					// up
+					mainChar->m_PosY = mainChar->m_PosY + 4;
+					break;
+				case 3:
+					// lkeft
+					mainChar->m_PosX = mainChar->m_PosX + 4;
+					break;
+				case 4:
+					// right
+					mainChar->m_PosX = mainChar->m_PosX - 4;
+					break;
+				}
 
-				}else
-					if (keyState->Move== 2)
-					{
-						// up
-						mainChar->m_PosY = mainChar->m_PosY + 4;
-
-					}else
-						if (keyState->Move == 3)
-						{
-							// lkeft
-							mainChar->m_PosX = mainChar->m_PosX + 4;
-
-						}else
-							if (keyState->Move == 4)
-							{
-								// right
-								mainChar->m_PosX = mainChar->m_PosX - 4;
-
-							}
 			}
 		}
 	}
@@ -623,7 +623,7 @@ void DrawEnemy(Count* count, VariableNumber* var, int MapChipList[20][28], Enemy
 {
 	
 	std::mt19937 mt{ std::random_device{}() };
-
+	
 	if (count->Frame6 == (60 * 15))
 	{
 
@@ -825,7 +825,7 @@ void ShotHitJudge(Bullet bullet[5], KeyState* keyState,MainChar* mainChar )
 // 星の描画
 void StarDraw(Star star[12],Count* count)
 {
-	if (count->StarDrawCount == (5 * 60))
+	if (count->StarDrawCount == (15 * 60))
 	{
 		for(int a = 0; a < 4; a ++ )
 		{
@@ -879,3 +879,4 @@ void HitBulletStar(MainChar* mainChar, Star star[12], Count* count, KeyState* ke
 		}
 	}
 }
+

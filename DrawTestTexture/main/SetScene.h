@@ -1,9 +1,9 @@
 ﻿#ifndef _SETSCENE_H_ 
 #define _SETSCNEN_H_
 
-SceneId SetSceneMain(Pointa* point, Count* count, VariableNumber* var);
+SceneId SetSceneMain(DirectX* directX, Count* count, VariableNumber* var);
 
-void DrawSetScene(Pointa* point, Count* count, VariableNumber* var);
+void DrawSetScene(DirectX* directX, Count* count, VariableNumber* var);
 
 class TextureSize
 {

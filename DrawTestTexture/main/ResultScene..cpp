@@ -7,10 +7,10 @@
 
 
 
-void InitResultScene(Pointa* point);
+void InitResultScene(DirectX* directX);
 void UpdateResultScene();
 SceneId FinisResultScene();
-void DrawResultScene(Pointa* point, Count* count);
+void DrawResultScene(DirectX* directX, Count* count);
 void FlameCountState(Count* count, ResultTextureSize* rts);
 
 TEXTUREDATA ResultTextureData;
@@ -30,13 +30,13 @@ TEXTUREDATA ResultTextureData;
 	 Frame10 = 0;
  }
 
-SceneId ResultSceneMain(Pointa* point, Count* count)
+SceneId ResultSceneMain(DirectX* directX, Count* count)
 {
 	switch (GetCurrentSceneStep())
 	{
 		// 初期化
 	case SceneStep::InitStep:
-		InitResultScene(point);
+		InitResultScene(directX);
 		count->AllReset();
 		break;
 
@@ -52,7 +52,7 @@ SceneId ResultSceneMain(Pointa* point, Count* count)
 }
 
 // 描画設定等
-void DrawResultScene(Pointa* point, Count* count)
+void DrawResultScene(DirectX* directX, Count* count)
 {
 	FlameCountState(count, &rts);
 
@@ -61,34 +61,34 @@ void DrawResultScene(Pointa* point, Count* count)
 	case 0:
 		break;
 	case 1:
-		DrawTest(0, 0, 1280, 960, 0, 0, 1, 1, &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture], *point);
+		DrawTest(0, 0, 1280, 960, 0, 0, 1, 1, &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture], *directX);
 		break;
 	case 2:
-		DrawTest(0, 0, 1280, 960, 0, 0, 1, 1, &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture2], *point);
+		DrawTest(0, 0, 1280, 960, 0, 0, 1, 1, &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture2], *directX);
 		break;
 	case 3:
-		DrawTest(0, 0, 1280, 960, 0, 0, 1, 1, &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture3], *point);
+		DrawTest(0, 0, 1280, 960, 0, 0, 1, 1, &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture3], *directX);
 		break;
 	case 4:
-		DrawTest(0, 0, 1280, 960, 0, 0, 1, 1, &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture4], *point);
+		DrawTest(0, 0, 1280, 960, 0, 0, 1, 1, &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture4], *directX);
 		break;
 	case 5:
-		DrawTest(0, 0, 1280, 960, 0, 0, 1, 1, &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture5], *point);
+		DrawTest(0, 0, 1280, 960, 0, 0, 1, 1, &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture5], *directX);
 		break;
 	case 6:
-		DrawTest(0, 0, 1280, 960, 0, 0, 1, 1, &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture6], *point);
+		DrawTest(0, 0, 1280, 960, 0, 0, 1, 1, &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture6], *directX);
 		break;
 	}
 }
 
-void InitResultScene(Pointa* point)
+void InitResultScene(DirectX* directX)
 {
-	LoadTexture("Texture/ResultSceneBack.png",  &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture], 0, point);
-	LoadTexture("Texture/ResultSceneBack2.png", &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture2], 0, point);
-	LoadTexture("Texture/ResultSceneBack3.png", &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture3], 0, point);
-	LoadTexture("Texture/ResultSceneBack4.png", &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture4], 0, point);
-	LoadTexture("Texture/ResultSceneBack5.png", &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture5], 0, point);
-	LoadTexture("Texture/ResultSceneBack6.png", &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture6], 0, point);
+	LoadTexture("Texture/ResultSceneBack.png",  &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture], 0,  directX);
+	LoadTexture("Texture/ResultSceneBack2.png", &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture2], 0, directX);
+	LoadTexture("Texture/ResultSceneBack3.png", &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture3], 0, directX);
+	LoadTexture("Texture/ResultSceneBack4.png", &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture4], 0, directX);
+	LoadTexture("Texture/ResultSceneBack5.png", &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture5], 0, directX);
+	LoadTexture("Texture/ResultSceneBack6.png", &ResultTextureData.m_pTexture[ResultTextureList::MainResultTexture6], 0, directX);
 
 	ChangeSceneStep(SceneStep::MainStep);
 }

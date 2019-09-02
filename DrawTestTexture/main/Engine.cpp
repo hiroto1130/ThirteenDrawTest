@@ -6,7 +6,7 @@
 // ポインタ宣言をまとめたクラス
 //Pointa Point;
 
-HWND *InitEngine(int width, int height, HINSTANCE hInst, Pointa* point)
+HWND *InitEngine(int width, int height, HINSTANCE hInst, DirectX* directX)
 {
 	//	window生成
 	//HWND wind_handle = Make_WndFull(hInst,width,height);
@@ -16,7 +16,7 @@ HWND *InitEngine(int width, int height, HINSTANCE hInst, Pointa* point)
 	FLOAT wnd_height = height;
 	OutputWindow(&hWnd, &hInst, szAppName, &wnd_width, &wnd_height);
 
-	if (FAILED(BuildDxDevice(&hWnd, point)))
+	if (FAILED(BuildDxDevice(&hWnd, directX)))
 	{
 
 		return 0;
@@ -25,7 +25,7 @@ HWND *InitEngine(int width, int height, HINSTANCE hInst, Pointa* point)
 	return &hWnd;
 }
 
-void EndEngine(Pointa point)
+void EndEngine(DirectX directX)
 {
 	// テクスチャの開放もする
 
@@ -35,27 +35,27 @@ void EndEngine(Pointa point)
 		point.pTexture[a] = nullptr;
 	}*/
 
-	if (point.pDinput != nullptr)
+	if (directX.pDinput != nullptr)
 	{
-		point.pDinput->Release();
-		point.pDinput = nullptr;
+		directX.pDinput->Release();
+		directX.pDinput = nullptr;
 	}
-	if (point.pkey != nullptr)
+	if (directX.pkey != nullptr)
 	{
-		point.pkey->Release();
-		point.pkey = nullptr;
+		directX.pkey->Release();
+		directX.pkey = nullptr;
 	}
 }
 
-bool DrawStart(Pointa* point)
+bool DrawStart(DirectX* directX)
 {
-	point->pDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0x00, 0x00, 0x00), 1.0f, 0);
+	directX->pDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0x00, 0x00, 0x00), 1.0f, 0);
 
-	point->pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
-	point->pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	point->pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	directX->pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	directX->pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	directX->pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
-	if (D3D_OK == point->pDevice->BeginScene())
+	if (D3D_OK == directX->pDevice->BeginScene())
 	{
 		return true;
 	}
@@ -63,7 +63,7 @@ bool DrawStart(Pointa* point)
 	return false;
 }
 
-void UpdateInput(Pointa* point)
+void UpdateInput(DirectX* directX)
 {
-	UpdateKeyStatus(point);
+	UpdateKeyStatus(directX);
 }

@@ -1,8 +1,8 @@
 ﻿#ifndef _RESULTSCENE_H_ 
 #define _RESULTSCNEN_H_
 
-SceneId OptionSceneMain(Pointa* point);
+SceneId OptionSceneMain(DirectX* directX);
 
-void DrawOptionScene(Pointa* point);
+void DrawOptionScene(DirectX* directX);
 
 #endif

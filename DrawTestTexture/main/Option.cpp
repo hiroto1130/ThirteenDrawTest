@@ -4,19 +4,19 @@
 #include"DrawTexture.h"
 #include"Device.h"
 
-void InitOptionScene(Pointa* point);
+void InitOptionScene(DirectX* directX);
 void UpdateOptionScene();
 SceneId FinisOptionScene();
 
 TEXTUREDATA OptionTextureData;
 
-SceneId OptionSceneMain(Pointa* point)
+SceneId OptionSceneMain(DirectX* directX)
 {
 	switch (GetCurrentSceneStep())
 	{
 		// 初期化
 	case SceneStep::InitStep:
-		InitOptionScene(point);
+		InitOptionScene(directX);
 		break;
 
 		// 本編
@@ -32,13 +32,13 @@ SceneId OptionSceneMain(Pointa* point)
 }
 
 // 描画設定等
-void DrawOptionScene(Pointa* point)
+void DrawOptionScene(DirectX* directX)
 {
 	//DrawTest(1045, 643, 179, 179, 0.25, 0, 0.5, 1, &OptionTextureData.m_pTexture[OptionTextureList::SabOptionTexture], *point);
 }
 
 // テクスチャ読み込み
-void InitOptionScene(Pointa* point)
+void InitOptionScene(DirectX* directX)
 {
 	//LoadTexture("Texture/OptionChar.png", &OptionTextureData.m_pTexture[OptionTextureList::SabOptionTexture], 0, point);
 

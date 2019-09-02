@@ -2,9 +2,9 @@
 #define _GAMESCENE_H_
 
 
-SceneId GameSceneMain(Pointa* point, VariableNumber* var, Count* count);
+SceneId GameSceneMain(DirectX* directX, VariableNumber* var, Count* count);
 
-void DrawGameScene(Pointa* point, MapChipData Mapdata, VariableNumber* var);
+void DrawGameScene(DirectX* directX, MapChipData Mapdata, VariableNumber* var);
 
 class MainChar
 {

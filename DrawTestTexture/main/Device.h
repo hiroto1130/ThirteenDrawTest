@@ -3,9 +3,9 @@
 
 #include "class.h"
 
-HRESULT BuildDxDevice(HWND *hInst, Pointa* point);
+HRESULT BuildDxDevice(HWND *hInst, DirectX* directX);
 
-void UpdateKeyStatus(Pointa* point);
+void UpdateKeyStatus(DirectX* directX);
 
 bool GetKeyStatus(int KeyNumber);
 

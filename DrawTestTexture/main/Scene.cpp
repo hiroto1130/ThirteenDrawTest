@@ -41,42 +41,42 @@ void ChangeSceneStep(SceneStep next_step)
 	g_CurrentSceneStep = next_step;
 }
 
-void UpdateScene(Pointa* point, MapChipData MapData, VariableNumber* var, Count* count)
+void UpdateScene(DirectX* directX, MapChipData MapData, VariableNumber* var, Count* count)
 {
 	int current_scene_id = SceneId::TitleScene;
 
 
 	while (true)
 	{
-		UpdateInput(point);
+		UpdateInput(directX);
 		SceneId result_id = g_CurrentSceneId;
 
 		switch (g_CurrentSceneId)
 		{
 			// タイトルシーン
 		case SceneId::TitleScene:
-			result_id = TitleSceneMain(point, count);
+			result_id = TitleSceneMain(directX, count);
 			break;
 			// 難易度設定シーン
 		case SceneId::SetScene:
-			result_id = SetSceneMain(point, count, var);
+			result_id = SetSceneMain(directX, count, var);
 			break;
 			// 設定、ヘルプシーン
 		case SceneId::OptionScene:
-			result_id = OptionSceneMain(point);
+			result_id = OptionSceneMain(directX);
 			break;
 			// メインゲームシーン
 		case SceneId::GameScene:
-			result_id = GameSceneMain(point, var, count);
+			result_id = GameSceneMain(directX, var, count);
 			break;
 			// リザルトシーン
 		case SceneId::ResultScene:
-			result_id = ResultSceneMain(point,count);
+			result_id = ResultSceneMain(directX,count);
 			break;
 
 		}
 
-		DrawScene(point, MapData, count, var);
+		DrawScene(directX, MapData, count, var);
 
 		FrameCount(count);
 
@@ -88,9 +88,9 @@ void UpdateScene(Pointa* point, MapChipData MapData, VariableNumber* var, Count*
 	}
 }
 
-void DrawScene(Pointa* point, MapChipData MapData, Count* count, VariableNumber* var)
+void DrawScene(DirectX* directX, MapChipData MapData, Count* count, VariableNumber* var)
 {
-	if (DrawStart(point) == false)
+	if (DrawStart(directX) == false)
 	{
 		return;
 	}
@@ -99,26 +99,26 @@ void DrawScene(Pointa* point, MapChipData MapData, Count* count, VariableNumber*
 		switch (g_CurrentSceneId)
 		{
 		case SceneId::TitleScene:
-			DrawTitleScene(point, count);
+			DrawTitleScene(directX, count);
 			break;
 		case SceneId::SetScene:
-			DrawSetScene(point, count, var);
+			DrawSetScene(directX, count, var);
 			break;
 		case SceneId::OptionScene:
-			DrawOptionScene(point);
+			DrawOptionScene(directX);
 			break;
 		case SceneId::GameScene:
-			DrawGameScene(point, MapData,var);
+			DrawGameScene(directX, MapData,var);
 			break;
 		case SceneId::ResultScene:
-			DrawResultScene(point, count);
+			DrawResultScene(directX, count);
 			break;
 		}
 	}
 
 
-	point->pDevice->EndScene();
-	point->pDevice->Present(NULL, NULL, NULL, NULL);
+	directX->pDevice->EndScene();
+	directX->pDevice->Present(NULL, NULL, NULL, NULL);
 }
 
 void FrameCount(Count* count)

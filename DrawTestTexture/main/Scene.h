@@ -20,8 +20,8 @@ SceneStep GetCurrentSceneStep();
 */
 void ChangeSceneStep(SceneStep next_step);
 
-void UpdateScene(Pointa* point, MapChipData MapData, VariableNumber* var, Count* count);
+void UpdateScene(DirectX* directX, MapChipData MapData, VariableNumber* var, Count* count);
 
-void DrawScene(Pointa* point, MapChipData MapData, Count* count, VariableNumber* var);
+void DrawScene(DirectX* directX, MapChipData MapData, Count* count, VariableNumber* var);
 
 #endif // !

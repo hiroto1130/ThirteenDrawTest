@@ -5,12 +5,12 @@
 
 //Pointa Point;
 
-HWND* InitEngine(int width, int height, HINSTANCE hInst, Pointa* point);
+HWND* InitEngine(int width, int height, HINSTANCE hInst, DirectX* directX);
 
-void EndEngine(Pointa point);
+void EndEngine(DirectX directX);
 
-bool DrawStart(Pointa* point);
+bool DrawStart(DirectX* directX);
 
-void UpdateInput(Pointa* point);
+void UpdateInput(DirectX* directX);
 
 #endif // !1
