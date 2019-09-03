@@ -38,4 +38,6 @@ void HitBulletStar(MainChar* mainChar, Star star[12],Count* count, KeyState* key
 
 void HitCharMeteorite(Meteorite meteorite[], MainChar* mainChar, Count* count, KeyState* keyState);
 
+void HitBulletStar(Bullet* bullet, Count* count, Enemy_Green e_green[], Enemy_White e_white[], KeyState* keyState);
+
 #endif // !GAMESYSTEM_H

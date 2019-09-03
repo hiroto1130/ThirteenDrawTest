@@ -33,6 +33,8 @@ public:
 	float m_PosTv      = (float) 40 / 512;
 	float m_PosTv_Size = (float) 80 / 512;
 
+	int DrawFlag = 0;
+
 };
 
 class Enemy_White
@@ -46,6 +48,8 @@ public:
 	float m_PosTu_Size = (float) 80 / 1024;
 	float m_PosTv      = (float)   40 / 512;
 	float m_PosTv_Size = (float)  80 / 512;
+
+	int DrawFlag = 0;
 
 };
 

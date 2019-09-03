@@ -91,15 +91,25 @@ void DrawGameScene(DirectX* directX, MapChipData MapData,VariableNumber* var)
 	// 自キャラ 操作キャラ
 	DrawTest(mainChar.m_PosX, mainChar.m_PosY, mainChar.DrawSize, mainChar.DrawSize, mainChar.m_PosTu, mainChar.m_PosTv, mainChar.m_PosTu_Size, mainChar.m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *directX);
 	
+	
 	if (var->EnemyDrawState == 1)
 	{
-		// 敵1 緑敵
-		DrawTest(e_green[0].m_PosX, e_green[0].m_PosY, e_green[0].m_DrawSize, e_green[0].m_DrawSize, e_green[0].m_PosTu, e_green[0].m_PosTv, e_green[0].m_PosTu_Size, e_green[0].m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *directX);
-		DrawTest(e_green[1].m_PosX, e_green[1].m_PosY, e_green[1].m_DrawSize, e_green[1].m_DrawSize, e_green[1].m_PosTu, e_green[1].m_PosTv, e_green[1].m_PosTu_Size, e_green[1].m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *directX);
-		// 敵2 紫敵
-		DrawTest(e_white[0].m_PosX, e_white[0].m_PosY, e_white[0].m_DrawSize, e_white[0].m_DrawSize, e_white[0].m_PosTu, e_white[0].m_PosTv, e_white[0].m_PosTu_Size, e_white[0].m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *directX);
-		DrawTest(e_white[1].m_PosX, e_white[1].m_PosY, e_white[1].m_DrawSize, e_white[1].m_DrawSize, e_white[1].m_PosTu, e_white[1].m_PosTv, e_white[1].m_PosTu_Size, e_white[1].m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *directX);
+		for (int a = 0; a < 2; a++)
+		{
+			if (e_green[a].DrawFlag == 1)
+			{
+				// 敵1 緑敵
+				DrawTest(e_green[a].m_PosX, e_green[a].m_PosY, e_green[a].m_DrawSize, e_green[a].m_DrawSize, e_green[a].m_PosTu, e_green[a].m_PosTv, e_green[a].m_PosTu_Size, e_green[a].m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *directX);
+			}
+			if (e_white[a].DrawFlag == 1)
+			{
+				// 敵2 紫敵
+				DrawTest(e_white[a].m_PosX, e_white[a].m_PosY, e_white[a].m_DrawSize, e_white[a].m_DrawSize, e_white[a].m_PosTu, e_white[a].m_PosTv, e_white[a].m_PosTu_Size, e_white[a].m_PosTv_Size, &GameTextureData.m_pTexture[GameTextureList::ChraTexture], *directX);
+
+			}
+		}
 	}
+	
 
 	// メテオ(第一弾)
 	if (var->MeteoriteDrawState == 1)
@@ -198,6 +208,8 @@ void UpdateGameScene(Count* count, VariableNumber* var)
 	HitBulletStar(&mainChar, star,count,&keyState);
 
 	HitCharMeteorite(meteorite,&mainChar,count,&keyState);
+
+	HitBulletStar(bullet,count,e_green,e_white,&keyState);
 
 	if (GetKeyStatus(DIK_RETURN))
 	{

@@ -2,6 +2,7 @@
 #include"Engine.h"
 #include"Device.h"
 #include"GameScene.h"
+
 #include <random>
 #include <iostream>
 
@@ -635,6 +636,7 @@ void DrawEnemy(Count* count, VariableNumber* var, int MapChipList[20][28], Enemy
 		MapChipList[left_height][0] = 5;
 		e_green[0].m_PosX = 80;
 		e_green[0].m_PosY = (left_height) * 40 + 80;
+		e_green[0].DrawFlag = 1;
 
 		// 右壁
 		std::uniform_int_distribution<int> RightHight(0, 19);
@@ -642,6 +644,7 @@ void DrawEnemy(Count* count, VariableNumber* var, int MapChipList[20][28], Enemy
 		MapChipList[right_hight][27] = 5;
 		e_green[1].m_PosX = 1160;
 		e_green[1].m_PosY = (right_hight) * 40 + 80;
+		e_green[1].DrawFlag = 1;
 
 		// 上壁
 		std::uniform_int_distribution<int> UpWith(0, 27);
@@ -649,6 +652,7 @@ void DrawEnemy(Count* count, VariableNumber* var, int MapChipList[20][28], Enemy
 		MapChipList[0][up_with] = 4;
 		e_white[0].m_PosX = (up_with) * 40 + 80;
 		e_white[0].m_PosY = 80;
+		e_white[0].DrawFlag = 1;
 
 		// 下壁
 		std::uniform_int_distribution<int> DownWith(0, 27);
@@ -656,6 +660,7 @@ void DrawEnemy(Count* count, VariableNumber* var, int MapChipList[20][28], Enemy
 		MapChipList[19][dorw_with] = 4;
 		e_white[1].m_PosX = (dorw_with) * 40 + 80;
 		e_white[1].m_PosY = 840;
+		e_white[1].DrawFlag = 1;
 
 		
 		var->EnemyState = 1;
@@ -690,7 +695,7 @@ void DrawEnemy(Count* count, VariableNumber* var, int MapChipList[20][28], Enemy
 }
 
 // 敵の動き
-void EnemyMove(Count* count, VariableNumber* var, Enemy_Green e_green[], Enemy_White e_white[] )
+void EnemyMove(Count* count, VariableNumber* var, Enemy_Green e_green[], Enemy_White e_white[])
 {
 	if (var->EnemyDrawState == 1)
 	{
@@ -699,25 +704,91 @@ void EnemyMove(Count* count, VariableNumber* var, Enemy_Green e_green[], Enemy_W
 		e_white[0].m_PosY = e_white[0].m_PosY + 2;
 		e_white[1].m_PosY = e_white[1].m_PosY - 2;
 	}
+
+
 	if (e_green[0].m_PosX == 1160)
 	{
-		e_green[0].m_PosX = 2000;
-		e_green[1].m_PosY = 2000;
-		e_green[0].m_PosX = 2000;
-		e_green[1].m_PosY = 2000;
+		e_green[0].m_PosX = 0;
+		e_green[0].m_PosX = 0;
+		e_green[0].DrawFlag = 2;
 
-		
 	}
-	if(e_white[0].m_PosY == 840)
+	if (e_green[1].m_PosX == 80)
 	{
-		e_white[0].m_PosX = 2000;
-		e_white[1].m_PosY = 2000;
-		e_white[0].m_PosX = 2000; 
-		e_white[1].m_PosY = 2000;
+		e_green[1].m_PosY = 0;
+		e_green[1].m_PosY = 0;
+		e_green[1].DrawFlag = 2;
 
-		var->EnemyDrawState = 0;
+	}
+	if (e_white[0].m_PosY == 840)
+	{
+		e_white[0].m_PosX = 0;
+		e_white[0].m_PosX = 0;
+		e_white[0].DrawFlag = 2;
+
+	}
+	if (e_white[1].m_PosY == 80)
+	{
+		e_white[1].m_PosY = 0;
+		e_white[1].m_PosY = 0;
+		e_white[1].DrawFlag = 2;
+	}
+	if (e_white[0].DrawFlag == 2 && e_white[1].DrawFlag == 2)
+	{
+		if (e_green[0].DrawFlag == 2 && e_green[1].DrawFlag == 2)
+		{
+			var->EnemyDrawState = 0;
+
+		}
 	}
 }
+
+// 敵と弾丸のあたり判定
+void HitBulletStar(Bullet* bullet, Count* count, Enemy_Green e_green[], Enemy_White e_white[], KeyState* keyState)
+{
+
+	for (int a = 0; a < 2; a++)
+	{
+		if (keyState->Shot > 0 && (e_green[a].DrawFlag == 1 || e_white[a].DrawFlag == 1) )
+		{
+			if ((bullet->m_PosX + 40 > e_green[a].m_PosX /*玉の右のあたり判定*/) && (bullet->m_PosX < e_green[a].m_PosX + 40)/*玉の左のあたり判定*/)
+			{
+
+				if ((bullet->m_PosY < e_green[a].m_PosY + 40)/*玉が下から当たった時ののあたり判定*/ && (bullet->m_PosY + 40 > e_green[a].m_PosY/*玉が上から当たった時のあたり判定*/))
+				{
+					e_green[a].DrawFlag = 2;
+
+					e_green[a].m_PosX = 0;
+					e_green[a].m_PosY = 0;
+
+					if (count->BulletCount > 0 && count->BulletCount < 5)
+					{
+						count->BulletCount = 0;
+					}
+				}
+			}
+
+			if ((bullet->m_PosX + 40 > e_white[a].m_PosX /*玉の右のあたり判定*/) && (bullet->m_PosX < e_white[a].m_PosX + 40)/*玉の左のあたり判定*/)
+			{
+
+				if ((bullet->m_PosY < e_white[a].m_PosY + 40)/*玉が下から当たった時ののあたり判定*/ && (bullet->m_PosY + 40 > e_white[a].m_PosY/*玉が上から当たった時のあたり判定*/))
+				{
+					e_white[a].DrawFlag = 2;
+
+					e_white[a].m_PosX = 0;
+					e_white[a].m_PosY = 0;
+
+					if (count->BulletCount > 0 && count->BulletCount < 5)
+					{
+						count->BulletCount = 0;
+					}
+				}
+			}
+		}
+	}
+}
+
+
 
 // 玉の段数用
 void Shot(Bullet bullet[5] , KeyState* keyState)
